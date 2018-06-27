@@ -98,17 +98,32 @@ func trim(s string) string {
 func CreateCertificate(name string) error {
 	rsaPath := "/usr/share/easy-rsa/"
 	varsPath := models.GlobalCfg.OVConfigPath + "keys/vars"
-	cmd := exec.Command("/bin/bash", "-c",
-		fmt.Sprintf(
-			"source %s &&"+
-				"export KEY_NAME=%s &&"+
-				"%s/build-key --batch %s", varsPath, name, rsaPath, name))
-	cmd.Dir = models.GlobalCfg.OVConfigPath
-	output, err := cmd.CombinedOutput()
+	path := models.GlobalCfg.OVConfigPath + "keys/index.txt"
+	certs, err := ReadCerts(path)
 	if err != nil {
-		beego.Debug(string(output))
 		beego.Error(err)
-		return err
+	}
+	Dump(certs)
+	exists := false
+	for _, v := range certs {
+		if v.Details.Name == name {
+			exists = true
+		}
+	}
+	if exists == false {
+		cmd := exec.Command("/bin/bash", "-c",
+			fmt.Sprintf(
+				"source %s &&"+
+					"export KEY_NAME=%s &&"+
+					"%s/build-key --batch %s", varsPath, name, rsaPath, name))
+		cmd.Dir = models.GlobalCfg.OVConfigPath
+		output, err := cmd.CombinedOutput()
+		if err != nil {
+			beego.Debug(string(output))
+			beego.Error(err)
+			return err
+		}
+		return nil
 	}
 	return nil
 }

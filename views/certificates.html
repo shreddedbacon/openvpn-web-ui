@@ -58,16 +58,24 @@
                     <span class="label label-info">CN: {{ .Details.CN }}</span>
                     <span class="label label-info">Email: {{ .Details.Email }}</span>
                   </td>
+                  {{if eq .Revocation ""}}
                   <td>
                     <a class="btn btn-warning btn-sm" href="{{urlfor "CertificatesController.Revoke" ":key" .Details.Name ":serial" .Serial}}">
                       Revoke Certificate
                     </a>
                   </td>
+                  {{else}}
+                  <td></td>
+                  {{end}}
+                  {{if eq .Revocation ""}}
+                  <td></td>
+                  {{else}}
                   <td>
                     <a class="btn btn-danger btn-sm" href="{{urlfor "CertificatesController.Remove" ":key" .Details.Name ":serial" .Serial}}">
                       Remove Certificate
                     </a>
                   </td>
+                  {{end}}
               </tr>
               {{ end }}
             {{end}}
