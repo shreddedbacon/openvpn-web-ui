@@ -8,9 +8,9 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/adamwalach/go-openvpn/client/config"
-	"github.com/adamwalach/openvpn-web-ui/lib"
-	"github.com/adamwalach/openvpn-web-ui/models"
+	"github.com/shreddedbacon/go-openvpn/client/config"
+	"github.com/shreddedbacon/openvpn-web-ui/lib"
+	"github.com/shreddedbacon/openvpn-web-ui/models"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/validation"
 )
@@ -54,6 +54,33 @@ func (c *CertificatesController) Download() {
 	if err := zw.Close(); err != nil {
 		beego.Error(err)
 	}
+}
+// @router /certificates/revoke/:key/:serial [get]
+func (c *CertificatesController) Revoke() {
+	c.TplName = "certificates.html"
+	name := c.GetString(":key")
+	serial := c.GetString(":serial")
+	err := lib.RevokeCertificate(name, serial)
+	if err != nil {
+		beego.Error(err)
+		//flash.Error(err.Error())
+		//flash.Store(&c.Controller)
+	}
+	c.showCerts()
+}
+
+// @router /certificates/remove/:key/:serial [get]
+func (c *CertificatesController) Remove() {
+	c.TplName = "certificates.html"
+	name := c.GetString(":key")
+	serial := c.GetString(":serial")
+	err := lib.RemoveCertificate(name, serial)
+	if err != nil {
+		beego.Error(err)
+		//flash.Error(err.Error())
+		//flash.Store(&c.Controller)
+	}
+	c.showCerts()
 }
 
 func addFileToZip(zw *zip.Writer, path string) error {

@@ -7,7 +7,7 @@ import (
 
 	passlib "gopkg.in/hlandau/passlib.v1"
 
-	"github.com/adamwalach/openvpn-web-ui/models"
+	"github.com/shreddedbacon/openvpn-web-ui/models"
 	"github.com/astaxie/beego"
 )
 
