@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/shreddedbacon/go-openvpn/client/config"
+	"github.com/adamwalach/go-openvpn/client/config"
 	"github.com/shreddedbacon/openvpn-web-ui/lib"
 	"github.com/shreddedbacon/openvpn-web-ui/models"
 	"github.com/astaxie/beego"

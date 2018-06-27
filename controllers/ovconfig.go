@@ -3,8 +3,8 @@ package controllers
 import (
 	"html/template"
 
-	"github.com/shreddedbacon/go-openvpn/server/config"
-	mi "github.com/shreddedbacon/go-openvpn/server/mi"
+	"github.com/adamwalach/go-openvpn/server/config"
+	mi "github.com/adamwalach/go-openvpn/server/mi"
 	"github.com/shreddedbacon/openvpn-web-ui/lib"
 	"github.com/shreddedbacon/openvpn-web-ui/models"
 	"github.com/astaxie/beego"
